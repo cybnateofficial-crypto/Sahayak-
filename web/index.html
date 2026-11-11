@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>SAHAYAK JARVIS — On-Phone AI</title>
+  <meta name="theme-color" content="#00D4FF"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="description" content="On-Phone JARVIS — talk like Iron Man, controls your phone, evolves via Kaggle/Colab"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <link rel="apple-touch-icon" href="/icon-512.png"/>
+  <link rel="icon" type="image/png" href="/icon-192.png"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;background:#050a18;color:#e6f0ff}
+    #installBtn{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#00D4FF,#0066FF);color:white;border:none;padding:12px 22px;border-radius:30px;font-weight:800;box-shadow:0 8px 24px rgba(0,212,255,.4);cursor:pointer;z-index:9999}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<button id="installBtn">📲 Install JARVIS App</button>
+<script>
+  // PWA install prompt
+  let deferred;
+  window.addEventListener('beforeinstallprompt', (e)=>{
+    e.preventDefault(); deferred=e;
+    document.getElementById('installBtn').style.display='block';
+  });
+  document.getElementById('installBtn').onclick=async()=>{
+    if(deferred){ deferred.prompt(); await deferred.userChoice; deferred=null; document.getElementById('installBtn').style.display='none'; }
+  };
+  if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js')); }
+</script>
+<script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.build/
+.venv/
+__pycache__/
+*.gguf
+*.bin
+*.onnx
+app_android/app/build/
+app_android/.gradle/
+web/dist/

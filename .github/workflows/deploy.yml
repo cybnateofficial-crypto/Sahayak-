@@ -1,0 +1,49 @@
+name: Deploy Sahayak Jarvis to GitHub Pages
+
+on:
+  push:
+    branches: [arena/a94e24d1-sahayak, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build web
+        run: |
+          cd web
+          npm ci
+          npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+  vercel:
+    runs-on: ubuntu-latest
+    if: false # enable if you add VERCEL_TOKEN secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./
