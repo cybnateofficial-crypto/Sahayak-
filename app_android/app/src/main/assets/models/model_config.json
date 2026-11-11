@@ -1,0 +1,12 @@
+{
+  "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "quant": "q4f16_1",
+  "context_window": 2048,
+  "max_tokens": 512,
+  "temperature": 0.7,
+  "alternatives": [
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct (better, 1.1GB)",
+    "microsoft/Phi-3-mini-4k-instruct (strongest, 2.3GB, needs 4GB RAM)"
+  ],
+  "ota_url": "https://your-server.com/ota/jarvis-latest.bin"
+}
