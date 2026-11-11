@@ -1,0 +1,7 @@
+{
+  "name": "sahayak-jarvis-root",
+  "private": true,
+  "scripts": {
+    "build": "cd web && npm install && npm run build && cp -r dist ../dist && cp -r public/* ../dist/ 2>/dev/null; echo built"
+  }
+}
