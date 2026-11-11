@@ -1,0 +1,33 @@
+name: Deploy Sahayak Jarvis to GitHub Pages
+on:
+  push:
+    branches: [arena/a94e24d1-sahayak, main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build web
+        run: |
+          cd web
+          npm ci
+          npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
